@@ -1,97 +1,73 @@
-# alananaya.dev • Personal Blog Platform
+# React + TypeScript + Vite
 
-A modern, Apple-inspired personal blog for **alananaya.dev** featuring a minimalist public site and a secure back-office to publish content. The stack combines a Vite + React + TypeScript frontend with TailwindCSS styling and an Express + SQLite backend for content management.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Project structure
+Currently, two official plugins are available:
 
-```
-├─ frontend/   # React application (Vite + TailwindCSS)
-├─ server/     # Express API with SQLite persistence
-└─ README.md   # This guide
-```
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Prerequisites
+## React Compiler
 
-- Node.js 20+
-- npm 10+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Setup
+## Expanding the ESLint configuration
 
-1. **Install dependencies**
-   ```bash
-   cd frontend && npm install
-   cd ../server && npm install
-   ```
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-2. **Configure environment variables**
-   ```bash
-   # Frontend
-   cd frontend
-   cp .env.example .env
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-   # Backend
-   cd ../server
-   cp .env.example .env
-   ```
-   Update values as needed. Defaults assume the API runs on `http://localhost:4000` and the Vite app on `http://localhost:5173`.
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-3. **Seeded admin credentials**
-   - Email: `alan@alananaya.dev`
-   - Password: `buildgreatapps`
-
-## Development workflow
-
-In two terminals:
-
-```bash
-# Terminal 1 – API
-cd server
-npm run dev
-
-# Terminal 2 – Frontend
-cd frontend
-npm run dev
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-- The backend starts on `http://localhost:4000` and seeds the database on first run.
-- The frontend dev server runs on `http://localhost:5173` and connects to the API (CORS + cookies enabled).
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## Production builds
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-```bash
-# Frontend bundle
-cd frontend
-npm run build
-
-# Backend build
-cd ../server
-npm run build
-# Start compiled server
-npm start
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-Static frontend assets live under `frontend/dist/`. Serve them through your preferred hosting or a CDN. The API outputs to `server/dist/`.
-
-## Key features
-
-- **Public site**
-  - Hero with focused messaging and clean typography
-  - Featured story and filterable post grid (Mobile, Apple, Projects, Reflections, etc.)
-  - Portfolio page for projects and an About page with timeline and focus areas
-- **Back office**
-  - Email/password authentication with HTTP-only cookies
-  - Dashboard metrics and quick actions
-  - Post management (create, edit, publish/unpublish, tag assignment)
-  - Markdown editor with live preview and hero image upload
-  - Taxonomy manager for categories and tag palettes
-  - Media library with file uploads stored locally under `server/uploads`
-
-## Configuration notes
-
-- Frontend mock data can be re-enabled by setting `VITE_USE_MOCK_DATA=true` in `frontend/.env`.
-- Uploaded media is stored on disk (`server/uploads`) and recorded in the `media_assets` table.
-- SQLite database lives at `server/data/blog.db`. Back it up or point to a different location by editing `server/src/db/client.ts`.
-
----
-
-Happy shipping!
