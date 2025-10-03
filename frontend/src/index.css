@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-neutral-100 text-neutral-900 font-sans antialiased;
+}
+
+main {
+  @apply min-h-screen;
+}
+
+* {
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-accent-soft focus-visible:ring-offset-4 focus-visible:ring-offset-white;
+}
