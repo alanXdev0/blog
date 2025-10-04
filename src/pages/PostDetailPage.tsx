@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Calendar, Clock, Eye, Tag as TagIcon, ArrowLeft } from 'lucide-react';
 import { format } from 'date-fns';
@@ -8,6 +8,7 @@ import type { Components } from 'react-markdown';
 import { motion } from 'framer-motion';
 import { Seo } from '@/components/seo/Seo';
 import { usePost } from '@/hooks/usePost';
+import { useViewCounter } from '@/hooks/useViewCounter'; // 👈 nuevo
 
 export const PostDetailPage = () => {
   const { slug } = useParams();
@@ -17,12 +18,13 @@ export const PostDetailPage = () => {
     isError,
   } = usePost(slug);
 
+  // 👇 nuevo: estado local para reflejar el total actualizado sin re-fetch
+  const [viewsOverride, setViewsOverride] = useState<number | null>(null);
+
   const canonicalPath = slug ? `/posts/${slug}` : undefined;
 
   const meta = useMemo(() => {
-    if (!post) {
-      return null;
-    }
+    if (!post) return null;
     const publishedAt = post.publishedAt ? new Date(post.publishedAt) : null;
     const formattedDate = publishedAt ? format(publishedAt, 'MMMM d, yyyy') : undefined;
     const readingTime = post.meta?.readingTime ?? post.readingTime ?? '5 min read';
@@ -31,6 +33,9 @@ export const PostDetailPage = () => {
   }, [post]);
 
   const publishedAtIso = post?.publishedAt ? new Date(post.publishedAt).toISOString() : undefined;
+
+  // 👇 nuevo: cuando ya haya post.id, incrementa y actualiza UI una sola vez por sesión
+  useViewCounter(post?.id, (serverViews) => setViewsOverride(serverViews));
 
   if (isLoading) {
     return (
@@ -69,6 +74,7 @@ export const PostDetailPage = () => {
   }
 
   const formattedTags = post.tags?.map((tag) => tag.name).filter(Boolean) ?? [];
+  const displayViews = (viewsOverride ?? meta?.views ?? 0);
 
   return (
     <>
@@ -109,7 +115,7 @@ export const PostDetailPage = () => {
             </span>
             <span className="flex items-center gap-2">
               <Eye className="h-4 w-4" />
-              {(meta?.views ?? 0).toLocaleString()} views
+              {displayViews.toLocaleString()} views
             </span>
           </div>
 
@@ -149,6 +155,7 @@ export const PostDetailPage = () => {
     </>
   );
 };
+
 
 const markdownComponents: Components = {
   h1: (props) => <h1 className="mt-10 text-3xl font-bold" {...props} />,

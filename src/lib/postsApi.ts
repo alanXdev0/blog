@@ -208,3 +208,17 @@ export const fetchPost = async (idOrSlug: string) => {
   }
   return mapped;
 };
+
+export const incrementPostView = async (id: number | string) => {
+  if (useMockData) return null;
+
+  try {
+    const res = await wordpressFetch<{ post_id: number; views: number; throttled?: boolean; skipped?: string }>(
+      `mobile-dev/v1/view/${id}`,
+      { method: "POST" }
+    );
+    return typeof res?.views === "number" ? res.views : null;
+  } catch {
+    return null;
+  }
+};
