@@ -147,7 +147,6 @@ const applyClientFilters = (posts: Post[], filters?: PostFilterOptions) => {
 };
 
 export const fetchPosts = async (filters?: PostFilterOptions) => {
-  console.log(useMockData)
   if (useMockData) {
     let posts = [...mockPosts];
     posts = posts.map((post) => ({ ...post, heroImage: resolveAssetUrl(post.heroImage) }));
