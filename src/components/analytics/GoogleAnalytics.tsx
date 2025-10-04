@@ -36,6 +36,7 @@ const initializeGtag = (measurementId: string) => {
 
 const trackPageView = (measurementId: string, path: string) => {
   window.gtag?.("event", "page_view", {
+    send_to: measurementId,
     page_path: path,
     page_location: window.location.href,
     page_title: document.title,
