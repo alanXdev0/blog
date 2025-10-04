@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Container } from '@/components/layout/Container';
 import { ProjectCard } from '@/components/projects/ProjectCard';
+import { Seo } from '@/components/seo/Seo';
 import { useProjects } from '@/hooks/useProjects';
 
 export const ProjectsPage = () => {
@@ -8,6 +9,11 @@ export const ProjectsPage = () => {
 
   return (
     <div className="min-h-screen bg-white transition-colors">
+      <Seo
+        title="Projects"
+        description="Apps and side projects I have built to solve real problems, explore new technologies, and push craft forwards."
+        canonical="/projects"
+      />
       <Container className="space-y-16 py-16">
         <motion.div
           initial={{ opacity: 0, y: -20 }}

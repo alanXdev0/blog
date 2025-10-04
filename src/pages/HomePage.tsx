@@ -5,6 +5,7 @@ import { FeaturedPostCard } from "@/components/blog/FeaturedPostCard";
 import { PostCard } from "@/components/blog/PostCard";
 import CategoryFilter from "@/components/blog/CategoryFilter";
 import Button from "@/components/ui/Button";
+import { Seo } from "@/components/seo/Seo";
 import { usePosts } from "@/hooks/usePosts";
 import { useTaxonomy } from "@/hooks/useTaxonomy";
 import { DEFAULT_POST_CATEGORIES } from "@/constants/categories";
@@ -71,6 +72,11 @@ export const HomePage = () => {
 
   return (
     <div className="bg-white">
+      <Seo
+        title="Software Engineer & Mobile Developer"
+        description="Exploring mobile development, the Apple ecosystem, and building great software experiences."
+        canonical="/"
+      />
       <Container className="space-y-16 py-16">
         <motion.div
           initial={{ opacity: 0, y: -20 }}

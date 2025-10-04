@@ -1,4 +1,5 @@
 import { Container } from '@/components/layout/Container';
+import { Seo } from '@/components/seo/Seo';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 
 const experienceHighlights = [
@@ -44,6 +45,11 @@ const timeline = [
 
 export const AboutPage = () => (
   <div className="space-y-20 pb-24">
+    <Seo
+      title="About Alan Anaya"
+      description="Senior mobile engineer crafting Apple-quality experiences across native and cross-platform stacks."
+      canonical="/about"
+    />
     <section className="border-b border-neutral-200/80 bg-gradient-to-b from-white to-neutral-100/50 py-24">
       <Container className="grid gap-16 md:grid-cols-[3fr_2fr] md:items-center">
         <div className="space-y-6">

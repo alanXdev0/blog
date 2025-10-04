@@ -17,8 +17,8 @@ export const Navbar = () => {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-100 bg-white/80 backdrop-blur-xl">
       <Container className="flex h-16 items-center justify-between">
-        <Link to="/" className="text-xl font-semibold tracking-tight text-neutral-900">
-          alananaya.dev
+        <Link to="/" className="inline-flex items-center" aria-label="Ir al inicio">
+          <img src="/Logo-Light.svg" alt="alananaya.dev" className="h-10 w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">

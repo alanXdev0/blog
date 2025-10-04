@@ -9,8 +9,10 @@ const footerLinks = [
 export const Footer = () => (
   <footer className="mt-20 border-t border-neutral-100 bg-neutral-50 transition-colors">
     <Container className="flex flex-col items-center justify-between gap-6 py-12 md:flex-row">
-      <div className="space-y-1 text-center md:text-left">
-        <p className="text-sm font-semibold uppercase tracking-[0.35em] text-neutral-500">alananaya.dev</p>
+      <div className="space-y-3 text-center md:text-left">
+        <div className="flex justify-center md:justify-start">
+          <img src="/Logo-Light.svg" alt="alananaya.dev" className="h-10 w-auto" />
+        </div>
         <p className="text-sm text-neutral-500">
           © {new Date().getFullYear()} Alan Anaya. Building great software.
         </p>
