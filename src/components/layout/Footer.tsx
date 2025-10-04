@@ -3,7 +3,7 @@ import { Container } from './Container';
 const footerLinks = [
   { label: 'GitHub', href: 'https://github.com/alanxdev0' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/alanxdev' },
-  { label: 'X', href: 'https://x.com/alananayaa' },
+  { label: 'X', href: 'https://x.com/alanxdev_' },
 ];
 
 export const Footer = () => (
