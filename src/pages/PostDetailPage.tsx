@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Calendar, Clock, Eye, Tag as TagIcon, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, Tag as TagIcon, ArrowLeft } from 'lucide-react';
 import { format } from 'date-fns';
 import type { HTMLAttributes } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -8,7 +8,6 @@ import type { Components } from 'react-markdown';
 import { motion } from 'framer-motion';
 import { Seo } from '@/components/seo/Seo';
 import { usePost } from '@/hooks/usePost';
-import { useViewCounter } from '@/hooks/useViewCounter'; // 👈 nuevo
 
 export const PostDetailPage = () => {
   const { slug } = useParams();
@@ -18,9 +17,6 @@ export const PostDetailPage = () => {
     isError,
   } = usePost(slug);
 
-  // 👇 nuevo: estado local para reflejar el total actualizado sin re-fetch
-  const [viewsOverride, setViewsOverride] = useState<number | null>(null);
-
   const canonicalPath = slug ? `/posts/${slug}` : undefined;
 
   const meta = useMemo(() => {
@@ -28,14 +24,10 @@ export const PostDetailPage = () => {
     const publishedAt = post.publishedAt ? new Date(post.publishedAt) : null;
     const formattedDate = publishedAt ? format(publishedAt, 'MMMM d, yyyy') : undefined;
     const readingTime = post.meta?.readingTime ?? post.readingTime ?? '5 min read';
-    const views = post.meta?.views ?? post.views ?? 0;
-    return { formattedDate, readingTime, views };
+    return { formattedDate, readingTime };
   }, [post]);
 
   const publishedAtIso = post?.publishedAt ? new Date(post.publishedAt).toISOString() : undefined;
-
-  // 👇 nuevo: cuando ya haya post.id, incrementa y actualiza UI una sola vez por sesión
-  useViewCounter(post?.id, (serverViews) => setViewsOverride(serverViews));
 
   if (isLoading) {
     return (
@@ -74,7 +66,6 @@ export const PostDetailPage = () => {
   }
 
   const formattedTags = post.tags?.map((tag) => tag.name).filter(Boolean) ?? [];
-  const displayViews = (viewsOverride ?? meta?.views ?? 0);
 
   return (
     <>
@@ -112,10 +103,6 @@ export const PostDetailPage = () => {
             <span className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
               {meta?.readingTime ?? '5 min read'}
-            </span>
-            <span className="flex items-center gap-2">
-              <Eye className="h-4 w-4" />
-              {displayViews.toLocaleString()} views
             </span>
           </div>
 

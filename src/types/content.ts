@@ -8,7 +8,6 @@ export interface PostTag {
 
 export interface PostMeta {
   readingTime: string;
-  views: number;
 }
 
 export interface Post {
@@ -25,7 +24,6 @@ export interface Post {
   isPublished: boolean;
   meta?: PostMeta;
   readingTime?: string;
-  views?: number;
 }
 
 export interface Project {

@@ -108,8 +108,6 @@ const mapWordpressPost = (post: WordpressPostResponse): Post => {
   const readingTime = computeReadingTime(markdownContent);
   const heroImage = extractFeaturedImage(post._embedded);
   const publishedAt = post.date_gmt ? new Date(post.date_gmt).toISOString() : null;
-  const metaViewsValue = post.meta?.["views"];
-  const metaViews = Number(metaViewsValue ?? 0);
 
   return {
     id: String(post.id),
@@ -125,10 +123,8 @@ const mapWordpressPost = (post: WordpressPostResponse): Post => {
     isPublished: post.status === "publish",
     meta: {
       readingTime,
-      views: Number.isFinite(metaViews) ? metaViews : 0,
     },
     readingTime,
-    views: Number.isFinite(metaViews) ? metaViews : 0,
   };
 };
 
@@ -207,18 +203,4 @@ export const fetchPost = async (idOrSlug: string) => {
     throw new Error("Post not found");
   }
   return mapped;
-};
-
-export const incrementPostView = async (id: number | string) => {
-  if (useMockData) return null;
-
-  try {
-    const res = await wordpressFetch<{ post_id: number; views: number; throttled?: boolean; skipped?: string }>(
-      `mobile-dev/v1/view/${id}`,
-      { method: "POST" }
-    );
-    return typeof res?.views === "number" ? res.views : null;
-  } catch {
-    return null;
-  }
 };

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Calendar, Clock, Eye } from "lucide-react";
+import { Calendar, Clock } from "lucide-react";
 import { format } from "date-fns";
 import type { Post } from "@/types/content";
 
@@ -19,7 +19,6 @@ export const FeaturedPostCard = ({ post }: FeaturedPostCardProps) => {
   const publishedAt = post.publishedAt ? new Date(post.publishedAt) : new Date();
   const formattedDate = format(publishedAt, "MMM d, yyyy");
   const readingTime = post.meta?.readingTime ?? post.readingTime ?? "5 min read";
-  const views = post.meta?.views ?? post.views ?? 0;
   const categoryClass = categoryColors[post.category] ?? "bg-white/10 text-white border-white/20";
 
   return (
@@ -60,10 +59,6 @@ export const FeaturedPostCard = ({ post }: FeaturedPostCardProps) => {
             <span className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
               {readingTime}
-            </span>
-            <span className="flex items-center gap-2">
-              <Eye className="h-4 w-4" />
-              {views.toLocaleString()} views
             </span>
           </div>
         </div>

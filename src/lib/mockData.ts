@@ -19,7 +19,6 @@ export const mockPosts: Post[] = [
     isPublished: true,
     meta: {
       readingTime: '6 min read',
-      views: 1250,
     },
   },
   {
@@ -40,7 +39,6 @@ export const mockPosts: Post[] = [
     isPublished: true,
     meta: {
       readingTime: '8 min read',
-      views: 980,
     },
   },
   {
@@ -61,7 +59,6 @@ export const mockPosts: Post[] = [
     isPublished: true,
     meta: {
       readingTime: '5 min read',
-      views: 860,
     },
   },
   {
@@ -82,7 +79,6 @@ export const mockPosts: Post[] = [
     isPublished: true,
     meta: {
       readingTime: '4 min read',
-      views: 540,
     },
   },
   {
@@ -104,7 +100,6 @@ export const mockPosts: Post[] = [
     isPublished: true,
     meta: {
       readingTime: '7 min read',
-      views: 1320,
     },
   },
   {
@@ -125,7 +120,6 @@ export const mockPosts: Post[] = [
     isPublished: true,
     meta: {
       readingTime: '9 min read',
-      views: 1120,
     },
   },
 ];
