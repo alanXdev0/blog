@@ -84,7 +84,7 @@ export const HomePage = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-950 md:text-6xl bg-gradient-to-r from-neutral-900 via-accent to-neutral-900 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold tracking-tight text-neutral-950 md:text-6xl bg-gradient-to-r from-neutral-900 via-accent to-neutral-900 bg-clip-text text-transparent pb-4">
             Software Engineer & Mobile Developer
           </h1>
           <p className="text-lg leading-relaxed text-neutral-600">
