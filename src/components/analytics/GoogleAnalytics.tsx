@@ -51,7 +51,7 @@ export const GoogleAnalytics = () => {
     if (!measurementId) {
       return;
     }
-
+    console.debug('GA ID', import.meta.env.VITE_GA_MEASUREMENT_ID);
     initializeGtag(measurementId);
   }, [measurementId]);
 
